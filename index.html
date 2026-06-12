@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MusicStore Web - Tienda de Música Latina</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ============================================================
+    TOAST CONTAINER
+    ============================================================ -->
+    <div id="toast-container"></div>
+
+    <!-- ============================================================
+    VIEW: LOGIN / REGISTRO
+    ============================================================ -->
+    <section id="view-login" class="view active">
+      <div class="login-bg-animation"></div>
+      <div class="login-container">
+        <div class="login-brand">
+          <div class="login-logo">
+            <span class="login-logo-icon">🎵</span>
+            <h1>MusicStore Web</h1>
+          </div>
+          <p class="login-tagline">Donde la música latina cobra vida</p>
+        </div>
+
+        <div class="login-tabs">
+          <button class="login-tab active" data-tab="login">Iniciar Sesión</button>
+          <button class="login-tab" data-tab="register">Registrarse</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="form-login" class="login-form active">
+          <div class="form-group">
+            <label>Correo Electrónico</label>
+            <input type="email" id="login-email" placeholder="tu@correo.com" required>
+          </div>
+          <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" id="login-password" placeholder="••••••••" required>
+          </div>
+          <button type="submit" class="btn-login-submit">Entrar y Escuchar 🎧</button>
+          <div class="login-role-buttons">
+            <button type="button" class="btn-role client" data-role="cliente">
+              <span>🎵</span> Entrar como Cliente
+            </button>
+            <button type="button" class="btn-role admin" data-role="admin">
+              <span>📊</span> Entrar como Admin
+            </button>
+          </div>
+        </form>
+
+        <!-- Register Form -->
+        <form id="form-register" class="login-form">
+          <div class="form-group">
+            <label>Nombre Completo</label>
+            <input type="text" placeholder="Ej: Carlos Quispe Huamán" required>
+          </div>
+          <div class="form-group">
+            <label>Correo Electrónico</label>
+            <input type="email" placeholder="tu@correo.com" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Contraseña</label>
+              <input type="password" placeholder="••••••••" required>
+            </div>
+            <div class="form-group">
+              <label>País</label>
+              <select>
+                <option>Perú</option>
+                <option>Colombia</option>
+                <option>México</option>
+                <option>Argentina</option>
+                <option>Chile</option>
+                <option>Puerto Rico</option>
+                <option>España</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn-login-submit">Crear Cuenta y Empezar 🚀</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============================================================
+    LAYOUT CLIENTE
+    ============================================================ -->
+    <div id="client-layout" class="layout">
+      <!-- Header Cliente -->
+      <header class="client-header">
+        <div class="client-header-left">
+          <div class="client-logo">
+            <span>🎵</span>
+            <span class="client-logo-text">MusicStore</span>
+          </div>
+          <nav class="client-nav">
+            <a href="#inicio" class="nav-link active" data-view="client-dashboard">Inicio</a>
+            <a href="#catalogo" class="nav-link" data-view="client-catalog">Catálogo</a>
+            <a href="#playlists" class="nav-link" data-view="client-playlists">Mis Playlists</a>
+            <a href="#facturas" class="nav-link" data-view="client-invoices">Mis Facturas</a>
+          </nav>
+        </div>
+        <div class="client-header-right">
+          <span class="client-user-greeting" id="client-user-name">Hola, Carlos</span>
+          <div class="client-avatar" id="client-avatar">👤</div>
+          <button class="btn-logout" id="btn-logout-client" title="Cerrar Sesión">🚪</button>
+        </div>
+      </header>
+
+      <!-- Main Content Cliente -->
+      <main class="client-main">
+        <!-- ==================== VIEW: CLIENT DASHBOARD ==================== -->
+        <section id="view-client-dashboard" class="view">
+          <div class="dashboard-welcome" id="dashboard-welcome">
+            <h2>¡Hola, <span id="welcome-name">Carlos</span>! 🎵 ¿Qué escuchamos hoy?</h2>
+            <p>Descubre los nuevos lanzamientos y los éxitos que están sonando</p>
+          </div>
+
+          <!-- KPIs Cliente -->
+          <div class="kpi-grid client-kpis">
+            <div class="kpi-card client-kpi">
+              <div class="kpi-icon">💰</div>
+              <div class="kpi-info">
+                <span class="kpi-value" id="kpi-total-gastado">S/. 0.00</span>
+                <span class="kpi-label">Total Gastado</span>
+              </div>
+            </div>
+            <div class="kpi-card client-kpi">
+              <div class="kpi-icon">🎶</div>
+              <div class="kpi-info">
+                <span class="kpi-value" id="kpi-canciones">0</span>
+                <span class="kpi-label">Canciones Compradas</span>
+              </div>
+            </div>
+            <div class="kpi-card client-kpi">
+              <div class="kpi-icon">📋</div>
+              <div class="kpi-info">
+                <span class="kpi-value" id="kpi-playlists">0</span>
+                <span class="kpi-label">Mis Playlists</span>
+              </div>
+            </div>
+            <div class="kpi-card client-kpi">
+              <div class="kpi-icon">🧾</div>
+              <div class="kpi-info">
+                <span class="kpi-value" id="kpi-ultima-factura">S/. 0.00</span>
+                <span class="kpi-label">Última Factura</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Novedades / Nuevos Lanzamientos -->
+          <section class="section-block">
+            <div class="section-header">
+              <h3>🔥 Novedades y Tendencias</h3>
+              <a href="#catalogo" class="section-link" data-view="client-catalog">Ver todo →</a>
+            </div>
+            <div class="album-carousel" id="novedades-carousel"></div>
+          </section>
+
+          <!-- Categorías Populares -->
+          <section class="section-block">
+            <div class="section-header">
+              <h3>🎧 Categorías Populares</h3>
+            </div>
+            <div class="chips-container" id="categorias-chips"></div>
+          </section>
+
+          <!-- Álbumes Destacados -->
+          <section class="section-block">
+            <div class="section-header">
+              <h3>⭐ Álbumes Destacados</h3>
+              <a href="#catalogo" class="section-link" data-view="client-catalog">Ver todo →</a>
+            </div>
+            <div class="album-grid" id="albumes-destacados"></div>
+          </section>
+        </section>
+
+        <!-- ==================== VIEW: CLIENT CATALOG ==================== -->
+        <section id="view-client-catalog" class="view">
+          <div class="catalog-header">
+            <h2>🎶 Catálogo de Música</h2>
+            <p>Explora nuestra colección de álbumes latinos</p>
+          </div>
+          <div class="catalog-layout">
+            <aside class="catalog-sidebar">
+              <div class="filter-section">
+                <h4>Género</h4>
+                <div class="filter-chips" id="filter-generos"></div>
+              </div>
+              <div class="filter-section">
+                <h4>Rango de Precio</h4>
+                <div class="filter-chips">
+                  <button class="chip filter-chip active" data-precio="all">Todos</button>
+                  <button class="chip filter-chip" data-precio="0-25">S/. 0 - 25</button>
+                  <button class="chip filter-chip" data-precio="25-35">S/. 25 - 35</button>
+                  <button class="chip filter-chip" data-precio="35-50">S/. 35 - 50</button>
+                </div>
+              </div>
+              <div class="filter-section">
+                <h4>Artista</h4>
+                <select class="filter-select" id="filter-artista">
+                  <option value="all">Todos los artistas</option>
+                </select>
+              </div>
+              <button class="btn btn-secondary btn-clear-filters" id="btn-clear-filters">Limpiar Filtros</button>
+            </aside>
+            <div class="catalog-content">
+              <div class="catalog-controls">
+                <span class="catalog-count" id="catalog-count">15 álbumes</span>
+                <div class="catalog-sort">
+                  <label>Ordenar:</label>
+                  <select id="sort-albumes">
+                    <option value="nombre">Nombre</option>
+                    <option value="precio-asc">Precio: Menor a Mayor</option>
+                    <option value="precio-desc">Precio: Mayor a Menor</option>
+                    <option value="nuevo">Más Recientes</option>
+                  </select>
+                </div>
+              </div>
+              <div class="album-grid catalog-grid" id="catalog-albums"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== VIEW: CLIENT ALBUM DETAIL ==================== -->
+        <section id="view-client-album" class="view">
+          <div id="album-detail-container"></div>
+        </section>
+
+        <!-- ==================== VIEW: CLIENT INVOICES ==================== -->
+        <section id="view-client-invoices" class="view">
+          <div class="section-header">
+            <h2>🧾 Mis Facturas</h2>
+            <p>Historial de tus compras realizadas</p>
+          </div>
+          <div id="invoices-content"></div>
+        </section>
+
+        <!-- ==================== VIEW: CLIENT PLAYLISTS ==================== -->
+        <section id="view-client-playlists" class="view">
+          <div class="section-header">
+            <h2>📋 Mis Playlists</h2>
+            <p>Tus listas de reproducción personalizadas</p>
+          </div>
+          <div id="playlists-content"></div>
+        </section>
+      </main>
+
+      <!-- Mini Player Cliente -->
+      <div class="mini-player" id="mini-player">
+        <div class="mini-player-info">
+          <div class="mini-player-thumb">🎵</div>
+          <div class="mini-player-track">
+            <span class="mini-player-title">Ninguna canción seleccionada</span>
+            <span class="mini-player-artist">Selecciona un álbum para escuchar</span>
+          </div>
+        </div>
+        <div class="mini-player-controls">
+          <button class="mini-btn" title="Anterior">⏮</button>
+          <button class="mini-btn mini-play" title="Reproducir">▶️</button>
+          <button class="mini-btn" title="Siguiente">⏭</button>
+        </div>
+        <div class="mini-player-progress">
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 0%"></div>
+          </div>
+          <span class="progress-time">0:00 / 0:00</span>
+        </div>
+        <div class="mini-player-volume">
+          <span>🔊</span>
+          <div class="volume-bar">
+            <div class="volume-fill" style="width: 70%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="client-footer">
+        <p>MusicStore Web © 2025 | Universidad Andina del Cusco</p>
+      </footer>
+    </div>
+
+    <!-- ============================================================
+    LAYOUT ADMINISTRADOR
+    ============================================================ -->
+    <div id="admin-layout" class="layout">
+      <!-- Sidebar Admin -->
+      <aside class="admin-sidebar">
+        <div class="admin-sidebar-header">
+          <div class="admin-logo">
+            <span>🎵</span>
+            <span class="admin-logo-text">MusicStore Admin</span>
+          </div>
+        </div>
+        <nav class="admin-nav">
+          <a href="#admin/inicio" class="admin-nav-link active" data-view="admin-dashboard">
+            <span class="nav-icon">📊</span> Dashboard
+          </a>
+          <a href="#admin/clientes" class="admin-nav-link" data-view="admin-clients">
+            <span class="nav-icon">👥</span> Clientes
+          </a>
+          <a href="#admin/empleados" class="admin-nav-link" data-view="admin-employees">
+            <span class="nav-icon">🧑‍💼</span> Empleados
+          </a>
+          <a href="#admin/reportes" class="admin-nav-link" data-view="admin-reports">
+            <span class="nav-icon">📈</span> Reportes
+          </a>
+        </nav>
+        <div class="admin-sidebar-footer">
+          <div class="admin-user-info">
+            <span>👨‍💻</span>
+            <span id="admin-user-name">Admin</span>
+          </div>
+          <button class="btn-logout" id="btn-logout-admin" title="Cerrar Sesión">🚪</button>
+        </div>
+      </aside>
+
+      <!-- Main Content Admin -->
+      <div class="admin-main-wrapper">
+        <main class="admin-main">
+          <!-- ==================== VIEW: ADMIN DASHBOARD ==================== -->
+          <section id="view-admin-dashboard" class="view">
+            <div class="admin-page-header">
+              <h2>📊 Panel de Control</h2>
+              <p>Resumen general de MusicStore</p>
+            </div>
+
+            <!-- KPIs Admin -->
+            <div class="kpi-grid admin-kpis">
+              <div class="kpi-card admin-kpi admin-kpi-verde">
+                <div class="kpi-icon">💵</div>
+                <div class="kpi-info">
+                  <span class="kpi-value" id="admin-kpi-ventas">S/. 0</span>
+                  <span class="kpi-label">Ventas del Mes</span>
+                </div>
+              </div>
+              <div class="kpi-card admin-kpi admin-kpi-azul">
+                <div class="kpi-icon">👥</div>
+                <div class="kpi-info">
+                  <span class="kpi-value" id="admin-kpi-clientes">0</span>
+                  <span class="kpi-label">Clientes Registrados</span>
+                </div>
+              </div>
+              <div class="kpi-card admin-kpi admin-kpi-naranja">
+                <div class="kpi-icon">🎶</div>
+                <div class="kpi-info">
+                  <span class="kpi-value" id="admin-kpi-canciones">0</span>
+                  <span class="kpi-label">Canciones Vendidas</span>
+                </div>
+              </div>
+              <div class="kpi-card admin-kpi admin-kpi-morado">
+                <div class="kpi-icon">🧑‍💼</div>
+                <div class="kpi-info">
+                  <span class="kpi-value" id="admin-kpi-empleados">0</span>
+                  <span class="kpi-label">Empleados</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gráficos Dashboard Admin -->
+            <div class="charts-row">
+              <div class="chart-card">
+                <h3>Ventas por Mes (S/.)</h3>
+                <div class="chart-bars" id="chart-ventas-mes"></div>
+              </div>
+              <div class="chart-card">
+                <h3>Ventas por Género</h3>
+                <div class="chart-donut" id="chart-genero"></div>
+              </div>
+            </div>
+
+            <!-- Top Canciones -->
+            <section class="section-block">
+              <div class="section-header">
+                <h3>🎵 Top Canciones Más Vendidas</h3>
+              </div>
+              <div class="table-container">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Canción</th>
+                      <th>Artista</th>
+                      <th>Ventas</th>
+                      <th>Ingresos</th>
+                    </tr>
+                  </thead>
+                  <tbody id="top-canciones-body"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+
+          <!-- ==================== VIEW: ADMIN CLIENTS ==================== -->
+          <section id="view-admin-clients" class="view">
+            <div class="admin-page-header">
+              <h2>👥 Gestión de Clientes</h2>
+              <p>Administra los clientes registrados en la plataforma</p>
+            </div>
+            <div class="table-toolbar">
+              <div class="table-search">
+                <input type="text" id="search-clientes" placeholder="Buscar cliente por nombre o email...">
+              </div>
+              <div class="table-filters">
+                <select id="filter-clientes-pais">
+                  <option value="all">Todos los países</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>País</th>
+                    <th>Registro</th>
+                    <th>Gastado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="clientes-table-body"></tbody>
+              </table>
+            </div>
+            <div class="table-pagination" id="clientes-pagination"></div>
+          </section>
+
+          <!-- ==================== VIEW: ADMIN EMPLOYEES ==================== -->
+          <section id="view-admin-employees" class="view">
+            <div class="admin-page-header">
+              <h2>🧑‍💼 Gestión de Empleados</h2>
+              <p>Administra el equipo de MusicStore</p>
+            </div>
+            <div class="table-toolbar">
+              <div class="table-search">
+                <input type="text" id="search-empleados" placeholder="Buscar empleado...">
+              </div>
+              <div class="table-filters">
+                <select id="filter-empleados-rol">
+                  <option value="all">Todos los roles</option>
+                </select>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Rol</th>
+                    <th>País</th>
+                    <th>Salario</th>
+                    <th>Contratación</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="empleados-table-body"></tbody>
+              </table>
+            </div>
+            <div class="table-pagination" id="empleados-pagination"></div>
+          </section>
+
+          <!-- ==================== VIEW: ADMIN REPORTS ==================== -->
+          <section id="view-admin-reports" class="view">
+            <div class="admin-page-header">
+              <h2>📈 Reportes y Estadísticas</h2>
+              <p>Análisis detallado de ventas e ingresos</p>
+            </div>
+
+            <div class="charts-row">
+              <div class="chart-card full-width">
+                <h3>📈 Evolución de Ingresos 2025</h3>
+                <div class="chart-line" id="chart-ingresos-linea"></div>
+              </div>
+            </div>
+
+            <section class="section-block">
+              <div class="section-header">
+                <h3>🏆 Ranking de Canciones</h3>
+              </div>
+              <div class="table-container">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Canción</th>
+                      <th>Artista</th>
+                      <th>Unidades Vendidas</th>
+                      <th>Ingresos Totales</th>
+                    </tr>
+                  </thead>
+                  <tbody id="ranking-canciones-body"></tbody>
+                </table>
+              </div>
+            </section>
+          </section>
+        </main>
+
+        <footer class="admin-footer">
+          <p>MusicStore Web © 2025 | Universidad Andina del Cusco</p>
+        </footer>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
